@@ -1,6 +1,6 @@
 import curses
 from curses import KEY_UP, KEY_DOWN
-from random import randint
+import random
 import time
 from .ball import Ball
 from .racket import Racket
@@ -11,9 +11,10 @@ COLUMNS = 79
 stdscr = curses.initscr()
 
 def main(stdscr):
-	# Initialize ball and racket	
-	ball = Ball([COLUMNS//2, ROWS//2],[1,randint(-2,2)]) # x - columns and y - rows
+	# Initialize ball racket and obstacle	
+	ball = Ball([COLUMNS//2, ROWS//2],[random.choice(1,2),random.choice(-2,-1,1,2)]) # x - columns and y - rows
 	racket = Racket(2, 6) # top is at y = 0, length is the number of rows
+	#obstacle = Obstacle(ROWS,COLUMNS)
 	# New curses window
 	win = curses.newwin(ROWS,COLUMNS)
 	curses.noecho()
