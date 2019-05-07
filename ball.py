@@ -1,6 +1,7 @@
 import numpy as np
 import curses
 from .racket import Racket
+from .obstacle import Obstacle
 
 class Ball:
 	def __init__(self, coord : np.array(2), speed : np.array(2)):
@@ -9,11 +10,12 @@ class Ball:
 		self.__vx = speed[0]
 		self.__vy = speed[1]
 		self.__color = 1 # Color key 1 (green)
+		self.__shape = '*'
 
 	def __repr__(self):
 		return "Ball with coordinates of x = {:}, y = {:} and speed of vx = {:}, vy = {:}".format(self.__x, self.__y, self.__vx, self.__vy)
 
-	def bounce(self, rows : int, columns : int, racket : Racket):
+	def bounce(self, rows : int, columns : int, racket : Racket, obstacle : Obstacle):
 		# First check if bounced from wall
 		if self.__x <= 0:
 			self.__vx = -self.__vx
@@ -38,4 +40,4 @@ class Ball:
 		return self.__vx, self.__vy
 
 	def draw(self, window):
-		window.addch(self.__y, self.__x, '*', curses.color_pair(self.__color))
+		window.addch(self.__y, self.__x, self.__shape, curses.color_pair(self.__color))

@@ -6,6 +6,7 @@ class Racket:
 		self.__top = top
 		self.__len = length
 		self.__color = 2 # blue color
+		self.__shape = '_'
 
 	def __repr__(self):
 		return "Racket at {:} of length {:}".format(self.__top, self.__len)
@@ -29,4 +30,4 @@ class Racket:
 		
 	def draw(self, window, column):
 		for item in range(self.__len):
-			window.addch(self.__top + item, column, '_', curses.color_pair(self.__color)) # Draw at y = top and at given x column
+			window.addch(self.__top + item, column, self.__shape, curses.color_pair(self.__color)) # Draw at y = top and at given x column

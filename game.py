@@ -4,6 +4,7 @@ import random
 import time
 from .ball import Ball
 from .racket import Racket
+from .obstacle import Obstacle
 
 ESCAPE = 27
 ROWS = 23
@@ -14,7 +15,7 @@ def main(stdscr):
 	# Initialize ball racket and obstacle	
 	ball = Ball([COLUMNS//2, ROWS//2],[random.choice(1,2),random.choice(-2,-1,1,2)]) # x - columns and y - rows
 	racket = Racket(2, 6) # top is at y = 0, length is the number of rows
-	#obstacle = Obstacle(ROWS,COLUMNS)
+	obstacle = Obstacle(ROWS,COLUMNS)
 	# New curses window
 	win = curses.newwin(ROWS,COLUMNS)
 	curses.noecho()
@@ -43,6 +44,7 @@ def main(stdscr):
 		#win.border()
 		ball.draw(win)
 		racket.draw(win,COLUMNS - 1)
+		obstacle.draw(win)
 		key = win.getch()
 		if key == ESCAPE or key == ord('q'):
 			break
@@ -52,7 +54,7 @@ def main(stdscr):
 			racket.move(ROWS, 1)
 
 		ball.move()
-		if ball.bounce(ROWS, COLUMNS, racket):
+		if ball.bounce(ROWS, COLUMNS, racket, obstacle):
 			win.addstr(ROWS//2,COLUMNS//2,"You lost!",curses.color_pair(4))
 			time.sleep(2)
 			break
