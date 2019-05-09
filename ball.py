@@ -1,5 +1,6 @@
 import numpy as np
 import curses
+from random import randint
 from .racket import Racket
 from .obstacle import Obstacle
 
@@ -19,6 +20,7 @@ class Ball:
 		# First check if bounced from wall
 		if self.__x <= 0:
 			self.__vx = -self.__vx
+			return 0
 		elif self.__x >= columns - 1:
 			for item in range(racket.length()):
 				if self.__y == racket.top() + item:
@@ -27,6 +29,13 @@ class Ball:
 			return 1
 		if self.__y <= 1 or self.__y >= rows - 2:
 			self.__vy = -self.__vy
+			return 0
+		# Check if bounced from obstacle
+		for i in range(obstacle.size()):
+			if self.__x == obstacle.x(i) and self.__y == obstacle.y(i):
+				obstacle.remove_brick(i)	
+				self.__vx = -self.__vx
+				self.__vy = randint(-2,2)
 		return 0
 
 	def move(self):
