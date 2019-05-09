@@ -3,7 +3,7 @@ import curses
 from random import randint
 
 class Obstacle:
-	def __init__(rows : int, columns : int):
+	def __init__(self, rows : int, columns : int):
 		# Knowing the window size, generate random shape
 		# First just generate a square
 		self.__bricks = 25
@@ -23,7 +23,7 @@ class Obstacle:
 		self.__color = 3
 		self.__shape = '+'
 
-	def __repr__():
+	def __repr__(self):
 		return "Obstacle of shape {:}".format(self.__shape)
 	def x(self, i : int):
 		if i >= self.__bricks or i < 0:
@@ -39,10 +39,14 @@ class Obstacle:
 
 	def remove_brick(self, i : int):
 		self.__mask[i] = 0
+	
+	def mask_state(self, i : int):
+		if i >= 0:
+			return self.__mask[i]
 
 	def draw(self, win):
 		for item in range(self.__bricks):
-			if self.__mask[i]:
+			if self.__mask[item]:
 				win.addch(self.__y[item], self.__x[item], self.__shape, curses.color_pair(self.__color))
 
 	def size(self):

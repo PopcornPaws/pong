@@ -7,13 +7,13 @@ from .racket import Racket
 from .obstacle import Obstacle
 
 ESCAPE = 27
-ROWS = 23
-COLUMNS = 79
+ROWS = 19
+COLUMNS = 27
 stdscr = curses.initscr()
 
 def main(stdscr):
 	# Initialize ball racket and obstacle	
-	ball = Ball([COLUMNS//2, ROWS//2],[randint(1,2),randint(-2,2)]) # x - columns and y - rows
+	ball = Ball([COLUMNS//2, ROWS//2],[1,randint(-1,1)]) # x - columns and y - rows
 	racket = Racket(2, 6) # top is at y = 0, length is the number of rows
 	obstacle = Obstacle(ROWS,COLUMNS)
 	# New curses window
@@ -41,7 +41,7 @@ def main(stdscr):
 	while True:
 		# Draw ball and racket
 		win.clear()
-		#win.border()
+		win.border()
 		ball.draw(win)
 		racket.draw(win,COLUMNS - 1)
 		obstacle.draw(win)
@@ -53,11 +53,11 @@ def main(stdscr):
 		elif key == curses.KEY_DOWN:
 			racket.move(ROWS, 1)
 
-		ball.move()
 		if ball.bounce(ROWS, COLUMNS, racket, obstacle):
 			win.addstr(ROWS//2,COLUMNS//2,"You lost!",curses.color_pair(4))
 			time.sleep(2)
 			break
+		ball.move()
 		win.refresh()
 		time.sleep(.2)
 
